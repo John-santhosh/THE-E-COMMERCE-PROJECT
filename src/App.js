@@ -25,21 +25,17 @@ function App() {
         <Route exact path="/">
           <Home></Home>
         </Route>
-        <Route path="/about">
+        <Route exact path="/about">
           <About></About>
         </Route>
-        <Route path="/cart">
+        <Route exact path="/cart">
           <Cart></Cart>
         </Route>
-        <Route path="/products">
+        <Route exact path="/products">
           <Products></Products>
         </Route>
-        <Route
-          exact
-          path="/products/:id"
-          children={<SingleProduct></SingleProduct>}
-        ></Route>
-        <Route path="/checkout">
+        <Route exact path="/products/:id" children={<SingleProduct />}></Route>
+        <Route exact path="/checkout">
           <Checkout></Checkout>
         </Route>
         <Route path="*">

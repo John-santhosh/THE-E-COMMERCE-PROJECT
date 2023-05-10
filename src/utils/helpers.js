@@ -1,3 +1,10 @@
-export const formatPrice = () => {}
+export const formatPrice = (number) => {
+  const newNum = Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+  }).format((number / 100) * 50);
 
-export const getUniqueValues = () => {}
+  return newNum;
+};
+
+export const getUniqueValues = () => {};

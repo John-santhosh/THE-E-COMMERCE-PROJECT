@@ -21,6 +21,7 @@ const Contact = () => {
               placeholder="powered by FormSpree, enter email"
               type="email"
               name="email"
+              required
               className="form-input"
             />
             <button className="submit-btn">subscribe</button>
