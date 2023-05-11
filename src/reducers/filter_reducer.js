@@ -11,10 +11,14 @@ import {
 
 const filter_reducer = (state, action) => {
   if (action.type === LOAD_PRODUCTS) {
+    let max = action.payload.map((product) => product.price);
+    max = Math.max(...max);
+    // console.log(max);
     return {
       ...state,
       filtered_products: [...action.payload],
       all_products: [...action.payload],
+      filters: { ...state.filters, max_price: max, price: max },
     };
   }
   if (action.type === SET_GRIDVIEW) {
@@ -36,7 +40,7 @@ const filter_reducer = (state, action) => {
   if (action.type === SORT_PRODUCTS) {
     const { sort, filtered_products } = state;
     let newSort = [...filtered_products];
-
+    // console.log(sort);
     if (sort === "price-lowest") {
       newSort = newSort.sort((curr, prev) => curr.price - prev.price);
     }
@@ -53,8 +57,81 @@ const filter_reducer = (state, action) => {
       newSort = newSort.sort((curr, prev) =>
         prev.name.localeCompare(curr.name)
       );
+      // console.log(newSort);
     }
     return { ...state, filtered_products: newSort };
+  }
+
+  if (action.type === UPDATE_FILTERS) {
+    const { name, value } = action.payload;
+    // setting dynamic object [name]: value
+    // console.log("triggered");
+    return { ...state, filters: { ...state.filters, [name]: value } };
+  }
+
+  if (action.type === FILTER_PRODUCTS) {
+    const { all_products } = state;
+    const { text, company, category, color, price, shipping } = state.filters;
+
+    let tempProducts = [...all_products];
+
+    // filter based on input text
+    if (text) {
+      tempProducts = tempProducts.filter((product) =>
+        product.name.toLowerCase().startsWith(text)
+      );
+    }
+
+    // company
+    // can do this way and next category way
+    if (company) {
+      if (company === "all") {
+        tempProducts = [...all_products];
+      } else {
+        tempProducts = tempProducts.filter(
+          (product) => product.company === company
+        );
+      }
+    }
+
+    // category
+    if (category !== "all") {
+      tempProducts = tempProducts.filter(
+        (product) => product.category === category
+      );
+    }
+
+    // color
+    if (color !== "all") {
+      tempProducts = tempProducts.filter((product) => {
+        return product.colors.find((c) => c == color);
+      });
+    }
+
+    // price
+    tempProducts = tempProducts.filter((product) => product.price <= price);
+
+    //shipping
+    if (shipping) {
+      tempProducts = tempProducts.filter(
+        (product) => product.shipping === true
+      );
+    }
+    return { ...state, filtered_products: tempProducts };
+  }
+  if (action.type === CLEAR_FILTERS) {
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        text: "",
+        company: "all",
+        category: "all",
+        color: "all",
+        price: state.filters.max_price,
+        shipping: false,
+      },
+    };
   }
   return state;
   throw new Error(`No Matching "${action.type}" - action type`);
