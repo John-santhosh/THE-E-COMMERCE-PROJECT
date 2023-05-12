@@ -77,21 +77,20 @@ const filter_reducer = (state, action) => {
 
     // filter based on input text
     if (text) {
-      tempProducts = tempProducts.filter((product) =>
-        product.name.toLowerCase().startsWith(text)
-      );
+      tempProducts = tempProducts.filter((product) => {
+        return product.name.toLowerCase().startsWith(text);
+      });
     }
 
     // company
     // can do this way and next category way
-    if (company) {
-      if (company === "all") {
-        tempProducts = [...all_products];
-      } else {
-        tempProducts = tempProducts.filter(
-          (product) => product.company === company
-        );
-      }
+    if (company !== "all") {
+      // if (company === "all") {
+      //   tempProducts = [...all_products];
+      // } else {
+      tempProducts = tempProducts.filter(
+        (product) => product.company === company
+      );
     }
 
     // category
@@ -109,7 +108,9 @@ const filter_reducer = (state, action) => {
     }
 
     // price
+    // if (price) {
     tempProducts = tempProducts.filter((product) => product.price <= price);
+    // }
 
     //shipping
     if (shipping) {
@@ -117,6 +118,8 @@ const filter_reducer = (state, action) => {
         (product) => product.shipping === true
       );
     }
+    // console.log(tempProducts);
+
     return { ...state, filtered_products: tempProducts };
   }
   if (action.type === CLEAR_FILTERS) {
