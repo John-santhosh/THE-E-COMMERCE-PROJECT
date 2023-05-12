@@ -6,5 +6,15 @@ import Cart from "./CartPage";
 import Error from "./ErrorPage";
 import Checkout from "./CheckoutPage";
 import Private from "./PrivateRoute";
-
-export { About, Home, SingleProduct, Products, Cart, Error, Checkout, Private };
+import AuthWrapper from "./AuthWrapper";
+export {
+  About,
+  Home,
+  SingleProduct,
+  Products,
+  Cart,
+  Error,
+  Checkout,
+  Private,
+  AuthWrapper,
+};
