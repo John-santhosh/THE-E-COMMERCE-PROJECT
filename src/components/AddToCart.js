@@ -10,7 +10,7 @@ const AddToCart = ({ product }) => {
 
   const { id, stock, colors } = product;
 
-  console.log(id, stock, colors);
+  // console.log(id, stock, colors);
   const [mainColor, setMainColor] = useState(colors[0]);
   const [amount, setAmount] = useState(1);
 
