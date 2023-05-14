@@ -11,12 +11,12 @@ import axios from "axios";
 import { useCartContext } from "../context/cart_context";
 import { useUserContext } from "../context/user_context";
 import { formatPrice } from "../utils/helpers";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = () => {
   const { cart, total_amount, shipping_fee, clearCart } = useCartContext();
   const { myUser } = useUserContext();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // stripe
   const [succeeded, setSucceeded] = useState(false);
@@ -81,8 +81,8 @@ const CheckoutForm = () => {
       setSucceeded(true);
       setTimeout(() => {
         clearCart();
-        history.push("/");
-      }, 10000);
+        navigate("/");
+      }, 2000);
     }
   };
   return (

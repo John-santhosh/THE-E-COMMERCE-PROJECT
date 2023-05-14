@@ -1,9 +1,5 @@
 // import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch as Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Navbar, Sidebar, Footer } from "./components";
 // import styled from "styled-components";
 import {
@@ -25,7 +21,24 @@ function App() {
         <Navbar></Navbar>
         <Sidebar></Sidebar>
         <Routes>
-          <Route exact path="/">
+          <Route path="/" element={<Home></Home>}></Route>
+          <Route path="/about" element={<About></About>}></Route>
+          <Route path="/cart" element={<Cart></Cart>}></Route>
+          <Route path="/products" element={<Products></Products>}></Route>
+          <Route
+            path="/products/:id"
+            element={<SingleProduct></SingleProduct>}
+          ></Route>
+          <Route
+            path="/checkout"
+            element={
+              <Private>
+                <Checkout />
+              </Private>
+            }
+          ></Route>
+          <Route path="*" element={<Error></Error>}></Route>
+          {/* <Route exact path="/">
             <Home></Home>
           </Route>
           <Route exact path="/about">
@@ -47,7 +60,7 @@ function App() {
           </Private>
           <Route path="*">
             <Error></Error>
-          </Route>
+          </Route> */}
         </Routes>
         <Footer></Footer>
       </Router>
